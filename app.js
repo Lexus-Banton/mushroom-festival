@@ -122,6 +122,12 @@ function displayFriends() {
             } else if (friend.satisfied === 3) {
                 // 2. Friend is already fully satisfied (3), set a message to pick another friend
                 message = `${friend.name} is already fully satisfied. Please pick another friend.`;
+            } else {
+                // 3. Feed friend mushroom
+                const fedMushroom = mushrooms.pop();
+                friend.satisfied++;
+                message = `${friend.name} enjoyed the ${fedMushroom.type}!`;
+            }
 
             displayMessage();
             displayMushrooms();
