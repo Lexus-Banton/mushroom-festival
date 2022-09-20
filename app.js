@@ -15,9 +15,10 @@ let message = '';
 let mushrooms = [{ type: 'porcini' }, { type: 'chanterelle' }, { type: 'morel' }];
 
 let friends = [
-    { name: 'Wilbur', satisfied: 0 },
-    { name: 'Miss Piggy', satisfied: 0 },
-    { name: 'Pumbaa', satisfied: 0 },
+    { name: 'Lex', satisfied: 0 },
+    { name: 'Abdullahi', satisfied: 0 },
+    { name: 'Ahmed', satisfied: 0 },
+    { name: 'Hamza', satisfied: 0 },
 ];
 
 // static types and probabilities
@@ -98,7 +99,6 @@ function displayMessage() {
 
 function displayMushrooms() {
     mushroomContainer.innerHTML = '';
-
     // > loop the mushrooms
     for (let mushroom of mushrooms) {
         // create a mushroom element using the renderMushroom function
@@ -115,14 +115,18 @@ function displayFriends() {
         const friendEl = renderFriend(friend);
 
         friendEl.addEventListener('click', () => {
-            // > handle the three possible outcomes:
-            // 1. No mushrooms, set a message to go hunt for more
-            // 2. Friend is already fully satisfied (3), set a message to pick another friend
-            // 3. Feed friend mushroom:
-            // a. "pop" a mushroom off the mushrooms array
-            // b. increase friend.satisfied by 1
-            // c. set a message that the friend enjoyed the mushroom,
-            //    include the friend name and mushroom type in the message
+            if (mushrooms.length === 0) {
+                // 1. No mushrooms, set a message to go hunt for more
+                message = 'No mushrooms! Go hunt for more!';
+            } else if (friend.satisfied === 3) {
+                // 2. Friend is already fully satisfied (3), set a message to pick another friend
+                message = `${friend.name} is already fully satisfied. Please pick another friend.`;
+            } else {
+                // 3. Feed friend mushroom
+                const fedMushroom = mushrooms.pop();
+                friend.satisfied++;
+                message = `${friend.name} enjoyed the ${fedMushroom.type}!`;
+            }
 
             displayMessage();
             displayMushrooms();
